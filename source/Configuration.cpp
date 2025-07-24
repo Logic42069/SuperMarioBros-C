@@ -12,6 +12,7 @@ std::list<ConfigurationOption*> Configuration::configurationOptions = {
     &Configuration::paletteFileName,
     &Configuration::renderScale,
     &Configuration::romFileName,
+    &Configuration::chrFileName,
     &Configuration::scanlinesEnabled,
     &Configuration::vsyncEnabled
 };
@@ -56,6 +57,13 @@ BasicConfigurationOption<int> Configuration::renderScale(
  */
 BasicConfigurationOption<std::string> Configuration::romFileName(
     "game.rom_file", "Super Mario Bros. (JU) (PRG0) [!].nes"
+);
+
+/**
+ * Optional filename for CHR tile data override.
+ */
+BasicConfigurationOption<std::string> Configuration::chrFileName(
+    "video.chr_file", ""
 );
 
 /**
@@ -144,4 +152,9 @@ bool Configuration::getScanlinesEnabled()
 bool Configuration::getVsyncEnabled()
 {
     return vsyncEnabled.getValue();
+}
+
+const std::string& Configuration::getChrFileName()
+{
+    return chrFileName.getValue();
 }

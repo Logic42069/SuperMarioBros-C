@@ -19,6 +19,38 @@ static SMBEngine* smbEngine = nullptr;
 static uint32_t renderBuffer[RENDER_WIDTH * RENDER_HEIGHT];
 
 /**
+ * Apply custom CHR graphics if configured.
+ */
+static void applyChrOverride()
+{
+    const std::string& chrFile = Configuration::getChrFileName();
+    if (chrFile.empty())
+    {
+        return;
+    }
+
+    FILE* file = fopen(chrFile.c_str(), "r");
+    if (file == NULL)
+    {
+        std::cout << "Failed to open CHR file \"" << chrFile << "\". Using ROM graphics.\n";
+        return;
+    }
+
+    fseek(file, 0L, SEEK_END);
+    size_t fileSize = ftell(file);
+    fseek(file, 0L, SEEK_SET);
+    if (fileSize < 8192)
+    {
+        std::cout << "CHR file \"" << chrFile << "\" is too small. Expected 8192 bytes." << std::endl;
+        fclose(file);
+        return;
+    }
+
+    fread(romImage + 16 + 2 * 16384, sizeof(uint8_t), 8192, file);
+    fclose(file);
+}
+
+/**
  * Load the Super Mario Bros. ROM image.
  */
 static bool loadRomImage()
@@ -68,6 +100,9 @@ static bool initialize()
     {
         return false;
     }
+
+    // Apply custom CHR graphics if configured
+    applyChrOverride();
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
