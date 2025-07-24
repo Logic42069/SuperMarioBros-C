@@ -82,6 +82,11 @@ The following is a list of all configurable options:
   - 1536-byte palette file: similar to the 192-byte palette file format described above. Only the first 192 bytes are used, as the rest are used by emphasis bits which are not supported by Super Mario Bros.
 - Default: ""
 
+#### chr_file
+
+- Optional path to a raw 8KiB CHR graphics file that overrides the tile graphics loaded from the ROM. Use this to provide custom sprite art.
+- Default: ""
+
 #### scale
 
 - Controls the scale factor for rendered video.

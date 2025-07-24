@@ -111,6 +111,11 @@ public:
     static const std::string& getPaletteFileName();
 
     /**
+     * Get the filename for an optional CHR tile override file.
+     */
+    static const std::string& getChrFileName();
+
+    /**
      * Get the desired ROM file name.
      */
     static const std::string& getRomFileName();
@@ -137,6 +142,7 @@ private:
     static BasicConfigurationOption<std::string> paletteFileName;
     static BasicConfigurationOption<int> renderScale;
     static BasicConfigurationOption<std::string> romFileName;
+    static BasicConfigurationOption<std::string> chrFileName;
     static BasicConfigurationOption<bool> scanlinesEnabled;
     static BasicConfigurationOption<bool> vsyncEnabled;
 
